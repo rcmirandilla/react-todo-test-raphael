@@ -115,8 +115,8 @@ export function ClunkyTodoList() {
       </div>
 
       <ul>
-        {tasksToRender.map((task, index) => (
-          <li key={index}>
+        {tasksToRender.map((task) => (
+          <li key={task.id}>
             <input
               type="checkbox"
               checked={task.completed}
