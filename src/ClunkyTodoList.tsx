@@ -15,14 +15,18 @@ export function ClunkyTodoList() {
     setNewTask(event.target.value);
   };
 
-  const handleAddTask = () => {
-    if (newTask.trim() !== "") {
-      const tempTasks = [...tasks];
-      tempTasks.push({ id: Date.now(), text: newTask, completed: false });
-      setTasks(tempTasks);
-      setNewTask("");
-    }
-  };
+  const handleAddTaskButtonClick = useCallback<
+    React.MouseEventHandler<HTMLButtonElement>
+  >(
+    (e) => {
+      if (newTask.trim() !== "") {
+        const newTaskItem = { id: Date.now(), text: newTask, completed: false };
+        setTasks((prev) => [...prev, newTaskItem]);
+        setNewTask("");
+      }
+    },
+    [newTask]
+  );
 
   const handleToggleComplete = (id) => {
     const updatedTasks = tasks.map((task) => {
@@ -82,7 +86,7 @@ export function ClunkyTodoList() {
         onChange={handleInputChange}
         placeholder="Add new task"
       />
-      <button onClick={handleAddTask}>Add</button>
+      <button onClick={handleAddTaskButtonClick}>Add</button>
       <div>
         <button onClick={handleRemoveAllCompletedItemsButtonClick}>
           Remove All Completed Items
