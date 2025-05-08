@@ -44,8 +44,7 @@ export function ClunkyTodoList() {
     );
   }, []);
 
-  const [tasksToRender, setTasksToRender] = useState<any[]>([]);
-  useEffect(() => {
+  const tasksToRender = useMemo(() => {
     let filteredTasks = tasks;
     if (filter === "completed") {
       filteredTasks = tasks.filter((task) => task.completed);
@@ -56,8 +55,8 @@ export function ClunkyTodoList() {
         (task) => task.text.split(/\b\w+\s\w+\b/).length === 2
       );
     }
-    setTasksToRender(filteredTasks);
-  }, [tasks, filter]);
+    return filteredTasks;
+  }, [filter, tasks]);
 
   const totalCount = useMemo(() => {
     return tasks.length;
