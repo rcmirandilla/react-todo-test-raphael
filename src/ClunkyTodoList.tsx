@@ -2,6 +2,45 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 // initial commit
 
+interface TTask {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+
+interface TListItemProps {
+  task: TTask;
+  onCompleteCheckboxChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onRemoveButtonClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const ListItem: React.FC<TListItemProps> = ({
+  task,
+  onCompleteCheckboxChange,
+  onRemoveButtonClick,
+}) => {
+  return (
+    <li key={task.id}>
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={onCompleteCheckboxChange}
+        data-value={task.id}
+      />
+      <span
+        style={{
+          textDecoration: task.completed ? "line-through" : "none",
+        }}
+      >
+        {task.text}
+      </span>
+      <button data-value={task.id} onClick={onRemoveButtonClick}>
+        [x]
+      </button>
+    </li>
+  );
+};
+
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState([
     { id: 1, text: "Learn React", completed: false },
@@ -116,24 +155,11 @@ export function ClunkyTodoList() {
 
       <ul>
         {tasksToRender.map((task) => (
-          <li key={task.id}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={handleCompleteChekboxChange}
-              data-value={task.id}
-            />
-            <span
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-              }}
-            >
-              {task.text}
-            </span>
-            <button data-value={task.id} onClick={handleRemoveButtonClick}>
-              [x]
-            </button>
-          </li>
+          <ListItem
+            task={task}
+            onCompleteCheckboxChange={handleCompleteChekboxChange}
+            onRemoveButtonClick={handleRemoveButtonClick}
+          />
         ))}
       </ul>
     </div>
