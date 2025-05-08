@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 // initial commit
 
@@ -55,6 +55,13 @@ export function ClunkyTodoList() {
     return tasks.length;
   }, [tasks.length]);
 
+  const handleRemoveButtonClick = useCallback<
+    React.MouseEventHandler<HTMLButtonElement>
+  >((e) => {
+    const taskId = e.currentTarget.dataset.value ?? "";
+    setTasks((prev) => prev.filter((item) => String(item.id) !== taskId));
+  }, []);
+
   return (
     <div>
       <h1>To-Do List</h1>
@@ -86,6 +93,9 @@ export function ClunkyTodoList() {
             >
               {task.text}
             </span>
+            <button data-value={task.id} onClick={handleRemoveButtonClick}>
+              [x]
+            </button>
           </li>
         ))}
       </ul>
