@@ -75,6 +75,13 @@ export function ClunkyTodoList() {
     setTasks((prev) => prev.filter((item) => !item.completed));
   }, []);
 
+  const handleFilterButtonClick = useCallback<
+    React.MouseEventHandler<HTMLButtonElement>
+  >((e) => {
+    const filterValue = e.currentTarget.dataset.value ?? "";
+    setFilter(filterValue);
+  }, []);
+
   return (
     <div>
       <h1>To-Do List</h1>
@@ -93,10 +100,18 @@ export function ClunkyTodoList() {
       </div>
 
       <div>
-        <button onClick={() => setFilter("all")}>All</button>
-        <button onClick={() => setFilter("active")}>Active</button>
-        <button onClick={() => setFilter("completed")}>Completed</button>
-        <button onClick={() => setFilter("two-words")}>2 Words</button>
+        <button data-value="all" onClick={handleFilterButtonClick}>
+          All
+        </button>
+        <button data-value="active" onClick={handleFilterButtonClick}>
+          Active
+        </button>
+        <button data-value="completed" onClick={handleFilterButtonClick}>
+          Completed
+        </button>
+        <button data-value="two-words" onClick={handleFilterButtonClick}>
+          2 Words
+        </button>
       </div>
 
       <ul>
