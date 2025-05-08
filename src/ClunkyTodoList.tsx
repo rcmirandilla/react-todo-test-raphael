@@ -30,21 +30,19 @@ export function ClunkyTodoList() {
     [newTask]
   );
 
-  const handleToggleComplete = (id) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        let tempTask = {
-          id: task.id,
-          text: task.text,
-          completed: task.completed,
-        };
-        tempTask.completed = !tempTask.completed;
-        return tempTask;
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-  };
+  const handleCompleteChekboxChange = useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >((e) => {
+    const taskId = e.currentTarget.dataset.value ?? "";
+    setTasks((prev) =>
+      prev.map((item) => {
+        if (String(item.id) === taskId) {
+          return { ...item, completed: !item.completed };
+        }
+        return item;
+      })
+    );
+  }, []);
 
   const [tasksToRender, setTasksToRender] = useState<any[]>([]);
   useEffect(() => {
@@ -108,7 +106,8 @@ export function ClunkyTodoList() {
             <input
               type="checkbox"
               checked={task.completed}
-              onChange={() => handleToggleComplete(task.id)}
+              onChange={handleCompleteChekboxChange}
+              data-value={task.id}
             />
             <span
               style={{
