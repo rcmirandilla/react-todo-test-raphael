@@ -11,9 +11,11 @@ export function ClunkyTodoList() {
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
 
-  const handleInputChange = (event) => {
+  const handleInputChange = useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >((event) => {
     setNewTask(event.target.value);
-  };
+  }, []);
 
   const handleAddTaskButtonClick = useCallback<
     React.MouseEventHandler<HTMLButtonElement>
