@@ -47,6 +47,10 @@ export function ClunkyTodoList() {
       filteredTasks = tasks.filter((task) => task.completed);
     } else if (filter === "active") {
       filteredTasks = tasks.filter((task) => !task.completed);
+    } else if (filter === "two-words") {
+      filteredTasks = tasks.filter(
+        (task) => task.text.split(/\b\w+\s\w+\b/).length === 2
+      );
     }
     setTasksToRender(filteredTasks);
   }, [tasks, filter]);
@@ -89,6 +93,7 @@ export function ClunkyTodoList() {
         <button onClick={() => setFilter("all")}>All</button>
         <button onClick={() => setFilter("active")}>Active</button>
         <button onClick={() => setFilter("completed")}>Completed</button>
+        <button onClick={() => setFilter("two-words")}>2 Words</button>
       </div>
 
       <ul>
