@@ -20,7 +20,7 @@ const ListItem: React.FC<TListItemProps> = ({
   onRemoveButtonClick,
 }) => {
   return (
-    <li key={task.id}>
+    <li>
       <input
         type="checkbox"
         checked={task.completed}
@@ -156,6 +156,7 @@ export function ClunkyTodoList() {
       <ul>
         {tasksToRender.map((task) => (
           <ListItem
+            key={task.id}
             task={task}
             onCompleteCheckboxChange={handleCompleteChekboxChange}
             onRemoveButtonClick={handleRemoveButtonClick}
