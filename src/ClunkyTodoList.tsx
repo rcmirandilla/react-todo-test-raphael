@@ -62,6 +62,12 @@ export function ClunkyTodoList() {
     setTasks((prev) => prev.filter((item) => String(item.id) !== taskId));
   }, []);
 
+  const handleRemoveAllCompletedItemsButtonClick = useCallback<
+    React.MouseEventHandler<HTMLButtonElement>
+  >((e) => {
+    setTasks((prev) => prev.filter((item) => !item.completed));
+  }, []);
+
   return (
     <div>
       <h1>To-Do List</h1>
@@ -74,10 +80,17 @@ export function ClunkyTodoList() {
       />
       <button onClick={handleAddTask}>Add</button>
       <div>
+        <button onClick={handleRemoveAllCompletedItemsButtonClick}>
+          Remove All Completed Items
+        </button>
+      </div>
+
+      <div>
         <button onClick={() => setFilter("all")}>All</button>
         <button onClick={() => setFilter("active")}>Active</button>
         <button onClick={() => setFilter("completed")}>Completed</button>
       </div>
+
       <ul>
         {tasksToRender.map((task, index) => (
           <li key={index}>
